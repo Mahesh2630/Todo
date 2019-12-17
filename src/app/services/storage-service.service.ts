@@ -6,21 +6,23 @@ import { Storage } from '@ionic/storage';
 })
 export class StorageServiceService {
     storageData: any = [];
+    newData: any = [];
     constructor(
                 private storage: Storage,
     ) { }
 
-    saveData(data) {
-
-        this.getData();
-        this.storage.set('todo', this.storageData);
+    async saveData() {
+        this.newData = '';
+        await this.getData();
+        this.newData.push(this.storageData);
+        console.log(this.newData);
+        await this.storage.set('todo', this.newData);
     }
 
-    getData() {
-        this.storage.get('todo').then((val) =>{
+    async getData() {
+        await this.storage.get('todo').then((val) =>{
             console.log(val);
-            this.storageData = val;
-            console.log(this.storageData);
+            this.newData = val;
         }, err =>{
             console.log(err);
         })

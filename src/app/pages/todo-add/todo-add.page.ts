@@ -19,15 +19,12 @@ export class TodoAddPage implements OnInit {
             title: ['', Validators.required],
             description: [''],
           });
-
-          this.storage.get('todo').then((val) =>{
-            console.log(val);
-        })
     }
 
-    logForm() {
+    async logForm() {
+        this.storageService.storageData = this.todo.value;
         console.log(this.todo.value);
-        this.storageService.saveData(this.todo.value)
+        await this.storageService.saveData();
     }
 
     ngOnInit() {
